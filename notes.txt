@@ -1,0 +1,1 @@
+hello, journaler. it will be an application capable of creating notes and todos with reminders that will be synced to our backend.
