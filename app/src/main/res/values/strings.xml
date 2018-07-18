@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Journaler</string>
+    <string name="title">Title</string>
+    <string name="your_note_content_goes_here">Your note content goes here.</string>
+    <string name="pick_a_date">Pick a Date.</string>
+    <string name="pick_time">Pick a Time.</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="lorem_ipsum_sit_dolore">lorem_ipsum_sit_dolore</string>
 </resources>
