@@ -1,20 +1,23 @@
 package mzx.com.journaler
 
+import Application.Companion.tag
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.GravityCompat
 import kotlinx.android.synthetic.main.activity_header.*
 import mzx.com.fragment.ItemsFragment
 import mzx.com.fragment.ManualFragment
-import mzx.com.journaler.R.id.filter_menu
-import mzx.com.journaler.R.id.pager
 import mzx.com.journaler.R.layout.activity_main
 import java.text.FieldPosition
 import android.support.v4.view.PagerAdapter
 import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
+import mzx.com.journaler.R.id.*
+import mzx.com.navigation.NavigationDrawerAdapter
+import mzx.com.navigation.NavigationDrawerItem
 
 
 class MainActivity : BaseActivity() {
@@ -29,6 +32,20 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         //pager.adapter = ViewPagerAdapter(supportFragmentManager)
         pager.adapter = ViewPagerAdapter(supportFragmentManager)
+        val menuItem = mutableListOf<NavigationDrawerItem>()
+        val today = NavigationDrawerItem(getString(R.string.today), Runnable { pager.setCurrentItem(0, true) })
+        val next7Days = NavigationDrawerItem(getString(R.string.next_seven_days), Runnable { pager.setCurrentItem(1, true) })
+        val todos = NavigationDrawerItem(getString(R.string.todos), Runnable { pager.setCurrentItem(2, true) })
+        val notes = NavigationDrawerItem(getString(R.string.notes), Runnable { pager.setCurrentItem(3, true) })
+
+        menuItem.add(today)
+        menuItem.add(next7Days)
+        menuItem.add(todos)
+        menuItem.add(notes)
+
+        val navgationDraweAdapter = NavigationDrawerAdapter(this, menuItem)
+        left_drawer.adapter = navgationDraweAdapter
+    }
 //        val fragment = ItemsFragment()
 //        supportFragmentManager
 //                .beginTransaction()
@@ -43,7 +60,6 @@ class MainActivity : BaseActivity() {
 //                    .addToBackStack("User manual")
 //                    .commit()
 //        }
-    }
 
     private class ViewPagerAdapter(manager: FragmentManager): FragmentStatePagerAdapter(manager){
         override fun getItem(position: Int): Fragment {
@@ -55,14 +71,16 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.drawing_menu -> {
                 Log.v(tag, "Main menu.")
+                drawer_layout.openDrawer(GravityCompat.START)
                 return true
             }
             R.id.options_menu -> {
                 Log.v(tag, "Options menu.")
+
                 return true
             }
             else -> {
